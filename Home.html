@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Blog</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+  <style>
+    body {
+      margin-top: 56px;
+      /* Adjust for fixed navbar */
+    }
+
+    .sticky-top {
+      top: 60px;
+      /* Adjust for fixed navbar height */
+    }
+
+    #pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    #pagination button {
+      margin: 0 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">My Blog</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#categories">Categories</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+        <form class="d-flex ms-3">
+          <input class="form-control me-2" type="search" placeholder="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container mt-4">
+    <div class="row">
+      <!-- Blog Content -->
+      <div class="col-md-8">
+        <div id="posts">
+          <!-- Blog posts will be dynamically inserted here -->
+        </div>
+
+        <!-- Pagination -->
+        <div id="pagination">
+          <button class="btn btn-secondary" id="prev-btn" disabled>Previous</button>
+          <button class="btn btn-secondary" id="next-btn">Next</button>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="col-md-4">
+        <div class="sticky-top">
+          <h4>Related Topics</h4>
+          <ul class="list-group">
+            <li class="list-group-item"><a href="#">How to Use Bootstrap</a></li>
+            <li class="list-group-item"><a href="#">Top 10 CSS Frameworks</a></li>
+            <li class="list-group-item"><a href="#">Responsive Design Tips</a></li>
+          </ul>
+          <button id="dark-mode-toggle" class="btn btn-secondary mt-3">Toggle Dark Mode</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="bg-dark text-white text-center py-3">
+    <p>&copy; 2024 My Blog. All Rights Reserved.</p>
+    <p><a href="#" class="text-white">Privacy Policy</a> | <a href="#" class="text-white">Terms of Service</a></p>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Dark Mode Toggle
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+    darkModeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('bg-dark');
+      document.body.classList.toggle('text-white');
+    });
+
+    // Blog Pagination
+    const postsPerPage = 1;
+    let currentPage = 1;
+
+    const posts = [
+      {
+        title: "Understanding Bootstrap and Building Modern Websites",
+        author: "John Doe",
+        date: "Nov 21, 2024",
+        description: "Bootstrap is a popular framework for building responsive websites...",
+        image: "https://via.placeholder.com/750x300",
+      },
+      {
+        title: "Top 10 CSS Frameworks You Should Know",
+        author: "Jane Smith",
+        date: "Nov 20, 2024",
+        description: "CSS frameworks make web development faster and more efficient...",
+        image: "https://via.placeholder.com/750x300",
+      },
+      {
+        title: "Responsive Design Tips for Beginners",
+        author: "Michael Lee",
+        date: "Nov 19, 2024",
+        description: "Responsive design is crucial in today's mobile-first world...",
+        image: "https://via.placeholder.com/750x300",
+      },
+    ];
+
+    function renderPosts() {
+      const postsContainer = document.getElementById('posts');
+      postsContainer.innerHTML = '';
+
+      const startIndex = (currentPage - 1) * postsPerPage;
+      const endIndex = startIndex + postsPerPage;
+      const currentPosts = posts.slice(startIndex, endIndex);
+
+      currentPosts.forEach((post) => {
+        const postHTML = `
+          <article>
+            <h2>${post.title}</h2>
+            <p><strong>Author:</strong> ${post.author} | <strong>Published:</strong> ${post.date}</p>
+            <img src="${post.image}" alt="${post.title}" class="img-fluid">
+            <p>${post.description}</p>
+            <div class="d-flex justify-content-start mt-3">
+              <a href="https://twitter.com/share?text=${encodeURIComponent(post.title)}&url=${window.location.href}" target="_blank" class="btn btn-outline-primary me-2">Share on Twitter</a>
+              <a href="https://www.facebook.com/sharer/sharer.php?u=${window.location.href}" target="_blank" class="btn btn-outline-primary me-2">Share on Facebook</a>
+              <a href="https://www.linkedin.com/shareArticle?mini=true&url=${window.location.href}&title=${encodeURIComponent(post.title)}" target="_blank" class="btn btn-outline-primary">Share on LinkedIn</a>
+            </div>
+          </article>
+          <hr>
+        `;
+        postsContainer.innerHTML += postHTML;
+      });
+    }
+
+    function updatePagination() {
+      document.getElementById('prev-btn').disabled = currentPage === 1;
+      document.getElementById('next-btn').disabled = currentPage === Math.ceil(posts.length / postsPerPage);
+    }
+
+    document.getElementById('prev-btn').addEventListener('click', () => {
+      if (currentPage > 1) {
+        currentPage--;
+        renderPosts();
+        updatePagination();
+      }
+    });
+
+    document.getElementById('next-btn').addEventListener('click', () => {
+      if (currentPage < Math.ceil(posts.length / postsPerPage)) {
+        currentPage++;
+        renderPosts();
+        updatePagination();
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderPosts();
+      updatePagination();
+    });
+  </script>
+</body>
+
+</html>

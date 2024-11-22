@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Blog Post</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+
+    <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+    
+    <style>
+        body{
+            margin-top: 60px;
+            background-color: #f3f2f3;
+        }
+        .navbar {
+            box-shadow: 3px 3px 5px 5px #444;
+        }
+        .navbar-nav li a {
+            transition: color 0.3s, transform 0.3s;
+            color: white;
+        }
+        li a:hover {
+            font-weight: bold;
+            transform:translateX(2px)
+        }
+    </style>
+</head>
+<body>
+    <nav class=" navbar bg-dark navbar-dark navbar-expand-lg fixed-top">
+        <div class="container">
+            <a href="#" class=" navbar-brand">
+                <img src="https://github.com/SHAHSULTANS/Picture/raw/main/mylogo2.png" alt="mylogo" width="30" height="30" class=" rounded-4">
+                <span>Shah Sultan</span>
+            </a>
+            
+            <button class=" navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class=" navbar-toggler-icon" ></span>
+            </button>
+            <div class=" collapse navbar-collapse" id="navbarNav">
+                <ul class=" navbar-nav ms-auto">
+                    <li class=" nav-item"><a href="#" class=" nav-link">Home</a></li>
+                    <li class=" nav-item"><a href="#" class=" nav-link">Categories</a></li>
+                    <li class=" nav-item"><a href="#" class=" nav-link">Contact</a></li>
+                    <li class=" nav-item"><a href="#" class=" nav-link">About</a></li>
+                </ul>
+                <form class=" d-flex">
+                    <input type="search" placeholder="Search.." class=" form-control me-2">
+                    <button type="button" class=" btn btn-outline-success">Seach</button>
+                </form>
+            </div>
+
+        </div>
+    </nav>
+
+
+    <!-- New Post Form Here-->
+     <div class="container mt-4">
+        <h2>Create New Post</h2>
+        <form >
+            <div class=" mb-3">
+                <label class=" form-label fw-bold fs-5">Post Title</label>
+                <input type="text" class=" form-control" placeholder="Enter Blog Title...">
+            </div>
+            <div class=" mb-3">
+                <label class=" form-label fw-bold fs-5">Content</label>
+                <textarea name="content" id="content" rows="10" class=" form-control"></textarea>
+            </div>
+            <button type="submit" class=" btn btn-primary">Publish</button>
+        </form>
+     </div>
+    
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        CKEDITOR.replace("content");
+    </script>
+    
+</body>
+</html>
